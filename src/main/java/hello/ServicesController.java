@@ -22,19 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ServicesController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServicesController.class);
 
-    @DeleteMapping
+    @DeleteMapping(produces = "application/json")
     public Integer findByServiceId(@RequestBody final RegisteredService service) {
         LOGGER.info("Deleting service [{}]", service.getServiceId());
         return HttpStatus.SC_OK;
     }
 
-    @PostMapping
+    @PostMapping(produces = "application/json")
     public RegisteredService save(@RequestBody final RegisteredService service) {
         LOGGER.info("Saving service [{}]", service.getServiceId());
         return service;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}" , produces = "application/json")
     public RegisteredService findServiceById(@PathVariable(name = "id") final String id) {
         if (NumberUtils.isParsable(id)) {
             LOGGER.info("Locating service by id [{}]", id);
@@ -45,7 +45,7 @@ public class ServicesController {
         }
     }
 
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public RegisteredService[] load() {
         LOGGER.info("Loading Services...");
         final RegexRegisteredService service = getRegexRegisteredService();
